@@ -1,6 +1,7 @@
 package com.example.luchi.flickster.adapters;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.example.luchi.flickster.R;
 import com.example.luchi.flickster.models.Movie;
 import com.squareup.picasso.Picasso;
 
+
 import java.util.List;
 
 /**
@@ -21,11 +23,22 @@ import java.util.List;
  */
 
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
+
+    private static class ViewHolder {
+
+        TextView tvTitle;
+        TextView tvOverview;
+        ImageView imageView;
+    }
+
+
+
     public MovieArrayAdapter(@NonNull Context context, List<Movie> movies) {
         super(context, android.R.layout.simple_list_item_1 , movies);
     }
 
     @NonNull
+
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Movie movie = getItem(position);
@@ -35,9 +48,13 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         }
         ImageView imageView = (ImageView) convertView.findViewById(R.id.ivMovieImage);
         imageView.setImageResource(0);
-        String txt = movie.getPosterPath();
+
         TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
         TextView tvOverview = (TextView) convertView.findViewById(R.id.tvOverview);
+
+
+
+
         Picasso.with(getContext()).load(movie.getPosterPath()).into(imageView);
         tvTitle.setText(movie.getOriginalTitle());
         tvOverview.setText(movie.getOverview());
