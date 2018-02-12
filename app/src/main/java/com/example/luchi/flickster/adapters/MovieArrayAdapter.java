@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
-int orientation;
+
     private static class ViewHolder {
 
         TextView tvTitle;
@@ -33,9 +33,9 @@ int orientation;
 
 
 
-    public MovieArrayAdapter(@NonNull Context context, List<Movie> movies , int orientation) {
+    public MovieArrayAdapter(@NonNull Context context, List<Movie> movies ) {
         super(context, android.R.layout.simple_list_item_1 , movies);
-        this.orientation = orientation;
+
     }
 
     @NonNull
@@ -59,9 +59,7 @@ int orientation;
         }
 
 
-
-
-
+        int orientation = getContext().getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             Picasso.with(getContext()).load(movie.getPosterPath()).into(viewHolder.imageView);
             // ...
@@ -69,6 +67,11 @@ int orientation;
             Picasso.with(getContext()).load(movie.getBackdropPath()).into(viewHolder.imageView);
             // ...
         }
+
+
+
+
+
 
 
         viewHolder.tvTitle.setText(movie.getOriginalTitle());

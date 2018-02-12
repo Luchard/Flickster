@@ -36,7 +36,7 @@ ListView listviewLand;
         listviewLand = (ListView) findViewById(R.id.lvItemLand);
         movies = new ArrayList<>();
         int orientation = getResources().getConfiguration().orientation;
-        moviearrayadapter = new MovieArrayAdapter(this , movies , orientation);
+        moviearrayadapter = new MovieArrayAdapter(this , movies);
 
 
 
