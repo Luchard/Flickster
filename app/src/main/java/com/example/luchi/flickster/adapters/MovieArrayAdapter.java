@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
-
+int orientation;
     private static class ViewHolder {
 
         TextView tvTitle;
@@ -33,8 +33,9 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
 
 
-    public MovieArrayAdapter(@NonNull Context context, List<Movie> movies) {
+    public MovieArrayAdapter(@NonNull Context context, List<Movie> movies , int orientation) {
         super(context, android.R.layout.simple_list_item_1 , movies);
+        this.orientation = orientation;
     }
 
     @NonNull
@@ -42,22 +43,36 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Movie movie = getItem(position);
+        ViewHolder viewHolder;
         if(convertView == null)
         {
+            viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_movie , parent , false);
+            viewHolder.tvOverview = (TextView) convertView.findViewById(R.id.tvTitle);
+            viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvOverview);
+            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.ivMovieImage);
+           // imageView.setImageResource(0);
         }
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.ivMovieImage);
-        imageView.setImageResource(0);
-
-        TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
-        TextView tvOverview = (TextView) convertView.findViewById(R.id.tvOverview);
-
+        else
+        {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
 
 
 
-        Picasso.with(getContext()).load(movie.getPosterPath()).into(imageView);
-        tvTitle.setText(movie.getOriginalTitle());
-        tvOverview.setText(movie.getOverview());
+
+
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Picasso.with(getContext()).load(movie.getPosterPath()).into(viewHolder.imageView);
+            // ...
+        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Picasso.with(getContext()).load(movie.getBackdropPath()).into(viewHolder.imageView);
+            // ...
+        }
+
+
+        viewHolder.tvTitle.setText(movie.getOriginalTitle());
+        viewHolder.tvOverview.setText(movie.getOverview());
         return convertView;
     }
 }

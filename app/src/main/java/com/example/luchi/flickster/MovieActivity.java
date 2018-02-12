@@ -35,10 +35,11 @@ ListView listviewLand;
         listView = (ListView) findViewById(R.id.lvMovies);
         listviewLand = (ListView) findViewById(R.id.lvItemLand);
         movies = new ArrayList<>();
-        moviearrayadapter = new MovieArrayAdapter(this , movies);
-
-
         int orientation = getResources().getConfiguration().orientation;
+        moviearrayadapter = new MovieArrayAdapter(this , movies , orientation);
+
+
+
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             listView.setAdapter(moviearrayadapter);
             setupViewListener();
